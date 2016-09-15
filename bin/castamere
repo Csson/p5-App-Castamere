@@ -1,0 +1,19 @@
+#!perl
+use 5.20.0;
+
+# ABSTRACT: Short intro
+# AUTHORITY
+# PODNAME: castamere
+our $VERSION = '0.0100';
+
+
+use App::Castamere;
+use App::Spec;
+use Dir::Self;
+my $spec = App::Spec->read(__DIR__. '/../share/castamere-spec.yaml');
+
+my $run = App::Castamere->new({
+    spec => $spec,
+});
+
+$run->run;

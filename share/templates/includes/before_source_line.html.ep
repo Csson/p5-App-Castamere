@@ -1,0 +1,123 @@
+%   use List::Util qw/any/;
+%   if(any { scalar $_->callers->@* } $subdefs->@*) {
+
+            <table class="devel-comment">
+%       for my $subinfo ($subdefs->@*) {
+
+%           my $callers = [sort { $b->{'total_calls'} <=> $a->{'total_calls'} || $b->{'incl_time'} <=> $a->{'incl_time'} } $subinfo->callers->@*];
+%           next if !scalar $callers->@*;
+
+                <tr>
+                    <td><%== $padding %>#</a></td>
+                    <td colspan="2">spent <%== $subinfo->formatted_time_incl_excl %></td>
+                    <td colspan="4">within <%= $subinfo->subname %>
+                                    which was called
+%           if($subinfo->calls > 1) {
+                        <%= $subinfo->calls %> times,
+
+                        avg <%= $subinfo->formatted_avg_time_per_call %>
+%           }
+                    </td>
+                </tr>
+
+%           for my $caller ($callers->@*) {
+                <tr>
+                    <td><a href="#"><%== $padding %>#</A></td>
+                    <td class="pull-right"><a href="#">
+%               if($caller->{'total_calls'} == 1) {
+                       once
+%              }
+%               else {
+                        <%= $caller->{'total_calls'} %> times
+%               }
+                    </a></td>
+                    <td><a href="#">
+%               if($caller->{'total_calls'} >= 1) {
+                        (<%= $subinfo->format_time($caller->{'excl_time'}) %> + <%= $subinfo->format_time($caller->{'incl_time'} - $caller->{'excl_time'}) %>)
+%               }
+                    </a></td>
+                    <td><a href="#">by <%= join '<br />' => $caller->{'calling_subs'}->@* %></a></td>
+                    <td><a href="#">at line <%= $caller->{'line'} %></a></td>
+                    <td><a href="#">of <%= $c->app->reporter->filename_of_fid($caller->{'fid'}) %></a></td>
+                    <td><a href="#">
+%              if($caller->{'total_calls'} > 1) {
+                    (avg <%= $subinfo->format_time($caller->{'incl_time'} / $caller->{'total_calls'}) %>)
+%               }
+                    </a></td>
+
+                </tr>
+%           }
+%       }
+            </table>
+%   }
+
+
+%#%   for my $subinfo ($line->subdefs->@*) {
+%#%       my $callers = [sort { $b->{'total_calls'} <=> $a->{'total_calls'} || $b->{'incl_time'} <=> $a->{'incl_time'} } $subinfo->callers->@*];
+%#%       next if !scalar $callers->@*;
+%#
+%#                <code class="devel-comment">
+%#                    # 
+%#                    spent <%== $subinfo->formatted_time_incl_excl %>
+%#                    within <%= $subinfo->subname %>
+%#                    which was called
+%#%       if($line->calls > 1) {
+%#                        <%= $subinfo->calls %> times,
+%#
+%#                        avg <%= $subinfo->formatted_avg_time_per_call %>
+%#%       }
+%#                </code>
+%#
+%#%       for my $caller ($callers->@*) {
+%#                <code class="devel-comment">
+%#                    #
+%#                    <%== '&nbsp;' x $subinfo->how_much_shorter_than_maximum_calls($caller->{'total_calls'}) %>
+%#%           if($caller->{'total_calls'} == 1) {
+%#                       once
+%#%           }
+%#%           else {
+%#                        <%= $caller->{'total_calls'} %> times
+%#%           }
+%#
+%#%           if($caller->{'total_calls'} >= 1) {
+%#                        (<%= $subinfo->format_time($caller->{'excl_time'}) %> + <%= $subinfo->format_time($caller->{'incl_time'} - $caller->{'excl_time'}) %>)
+%#%           }
+%#                    by <%= $subinfo->subname %>
+%#                    at line <%= $caller->{'line'} %>
+%#                    of <%= $c->app->reporter->filename_of_fid($caller->{'fid'}) %>
+%#%           if($caller->{'total_calls'} > 1) {
+%#                    (avg <%= $subinfo->format_time($caller->{'incl_time'} / $caller->{'total_calls'}) %>)
+%#%           }
+%#
+%#                </code>
+%#%       }
+%#%   }
+
+
+
+
+
+%#            say scalar $callers->@*;
+%#                my $timers = sprintf " (%s+%s)", fmt_time($caller->{'excl_time'}),  fmt_time($caller->{'incl_time'} - $caller->{'excl_time'});
+%#                my $avg_time = "";
+%#                $avg_time = sprintf "avg %s/call", fmt_time($caller->{'incl_time'} / $caller->{'total_calls'}) if $caller->{'total_calls'} > 1;
+%#
+%#                say sprintf q{# %*s times%s by %s at line %s of %s, %s},
+%#                        length($subinfo->maximum_calls_by_caller),
+%#                        $caller->{'total_calls'},
+%#                        $timers,
+%#                        $subinfo->subname,
+%#                        $caller->{'line'}, $self->reporter->filename_of_fid($caller->{'fid'}), $avg_time;
+%#            }
+%#
+%#            say '  ' . $line->calls || '';
+%#            my $subname = $subinfo->subname;
+%#          #  p $sub_info; die;
+%#            say $subname;
+%#            say "    $source_line";
+%#            next SOURCELINE;
+%#        }
+
+
+
+

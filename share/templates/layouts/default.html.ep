@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Castamere - html viewer for Devel::NYTProf</title>
+        %= bootstrap 'allq'
+        <link href="/resources/castamere.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <%= navbar  header => ['Castamere', ['#'], hamburger],
+                    container => 'normal',
+                    nav => [
+                    ],
+        %>
+        <div class="container-fluid"><%= content %></div>
+    </body>
+</html>

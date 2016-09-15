@@ -1,0 +1,70 @@
+%   use App::Castamere::Util qw/format_time/;
+
+%   if(scalar $line->subcalls->@* || $line->evalcall_count) {
+
+            <table class="devel-comment">
+                <tbody>
+%       for my $subcall ($line->sorted_subcalls->@*) {
+                    <tr>
+                        <td><a href="#"><%== $padding %>#</a></td>
+                        <td><a href="#">
+                                spent <%= format_time($subcall->incl_and_recur_time) %>
+                        </a></td>
+                        <td><a href="#">
+                                making <%= $subcall->calls %> call<%= $subcall->calls == 1 ? '' : 's' %>
+                        </a></td>
+                        <td><a href="#">
+                                to <%= $subcall->to %>
+%           if($subcall->calls > 1) {
+                            avg <%= format_time $subcall->incl_and_recur_time / $subcall->calls %>
+%           }
+%           if($subcall->recur_depth) {
+                            recursion: max depth <%= $subcall->recur_depth %>, sum of overlapping time <%= format_time $subcall->recur_time %>
+%           }
+                        </a></td>
+                    </tr>
+%       }
+
+%       for my $eval_file ($line->sorted_eval_files->@*) {
+                    <tr>
+                    <!-- # spent 748µs executing statements in string eval -->
+                        <td><a href="#"><%== $padding %>#</a></td>
+                        <td><a href="#">spent</td>
+                        <td class="pull-right"><a href="#">
+                            <%= format_time($eval_file->fileinfo->sum_of_stmts_time) %>
+                        </a></td>
+                        <td colspan="2"><a href="#">
+                            executing statements in
+%           if($eval_file->fileinfo->meta->{'merged_fids'}) {
+                                <%= 1 + scalar $eval_file->fileinfo->meta->{'merged_fids'}->@* %> string evals (merged)
+%           }
+%           else {
+                                string eval
+%           }
+%           if($eval_file->fileinfo->has_evals(1)) {
+                                (<%= format_time($eval_file->fileinfo->sum_of_stmts_time) %> here
+                                plus <%= format_time($eval_file->nested_eval_time) %>
+                                in <%= $eval_file->fileinfo->has_evals(1) %> nested evals)
+%           }
+                        </a></td>
+                    </tr>
+%           if($eval_file->eval_call_count) {
+
+                    <tr>
+                        <td><a href="#"><%== $padding %>#</a></td>
+                        <td><a href="#">
+                            includes
+                        </a></td>
+                        <td class="pull-right"><a href="#">
+                            <%= format_time($eval_file->eval_excl_time, 2) %>
+                        </a></td>
+                        <td><a href="#">
+                            spent executing <%= $eval_file->eval_call_count %> calls
+                            to <%= $eval_file->eval_sub_count %> subs defined therein
+                        </a></td>
+                    </tr>
+%           }
+%       }
+                </tbody>
+            </table>
+%   }

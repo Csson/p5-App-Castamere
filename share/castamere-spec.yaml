@@ -1,0 +1,10 @@
+---
+name: castamere
+appspec: { "version": 0.0100 }
+class: App::Castamere
+title: App::Castamere
+
+subcommands:
+  doit:
+    summary: Yes  
+    op: doit

@@ -1,0 +1,58 @@
+% use App::Castamere::Util qw/format_time/;
+
+    <h3><%= $file->fileinfo->filename %></h3>
+    <table class="table table-squashed table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th class="text-center">State<br />ments</th>
+                <th class="text-center">Time<br />on line</th>
+                <th class="text-center">Calls</th>
+                <th class="text-center">Time<br />in subs</th>
+                <th>Source</th>
+            </tr>
+        </thead>
+        <tbody>
+%   my $linenum = 0;$file->stats;
+%   for my $source_line ($file->fileinfo->srclines_array->@*) {
+%       my $line = $file->lines->[++$linenum];
+
+            <tr>
+                <td class="text-right"><%= $linenum %></td>
+                <td class="text-right"><%= $line->statement_calls ? $line->statement_calls : '' %></td>
+                <td class="text-right"><%= $line->statement_time ? format_time $line->statement_time : '' %></td>
+                <td class="text-right"><%= $line->subcall_count ? $line->subcall_count : '' %></td>
+                <td class="text-right"><%= $line->subcall_time ? format_time $line->subcall_time : '' %></td>
+                <td>
+                    % $source_line =~ m{^(?<spaces> +)};
+                    % my $spaces = $+{'spaces'} ? '&nbsp;' x length $+{'spaces'} : '';
+                    % $source_line =~ s{^( +)}{$spaces};
+
+                    %= include 'includes/before_source_line', subdefs => $line->subdefs, padding => $spaces
+                    <code class="source-line"><%== $source_line =~ s{^( +)}{'&nbsp;' x length $1 }gre %></code>
+                    %= include 'includes/after_source_line', line => $line, padding => $spaces
+                </td>
+            </tr>
+
+%   }
+%   if($file->xsubs->@*) {
+            <tr>
+                <td colspan="6" style="background-color: #bbb;"></td>
+            </tr>
+%       for my $xsub ($file->xsubs->@*) {
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>
+                    %= include 'includes/before_source_line', subdefs => [$xsub], padding => ''
+                    <code class="source-line">sub <%= $xsub->subname %>; # <%= $xsub->subinfo->kind %>
+                </td>
+            </tr>
+%       }
+%   }
+        </tbody>
+    </table>
+

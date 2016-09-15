@@ -1,0 +1,52 @@
+code.source-line {
+    background-color: inherit;
+    color: #333;
+    padding: 0px 4px;
+    display: block;
+}
+table.table-squashed > tbody > tr > td {
+    line-height: 0.9;
+    border-top-style: dotted;
+    white-space: nowrap;
+}
+table.table-squashed > tbody > tr > td:not(:last-of-type),
+table.table-squashed > thead > tr > th:not(:last-of-type) {
+    border-right: 1px dotted #ddd;
+}
+code.devel-comment {
+    color: #888;
+    display: block;
+}
+table.devel-comment {
+    margin-left: 6px;
+}
+table.devel-comment + code {
+    margin-top: 6px;
+}
+code + table.devel-comment {
+    margin-top: 6px;
+}
+table.devel-comment td {
+    color: #888;
+    font-size: 95%;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    white-space: nowrap;
+}
+table.devel-comment tr:not(:last-of-type) td {
+    padding-bottom: 2px;
+}
+table.devel-comment td a {
+    color: #888;
+    display: block;
+    padding-right: 8px;
+    width: 100%;
+    height: 100%;
+}
+table.devel-comment tr:hover * {
+    color: #444;
+    background-color: none;
+    text-decoration: none;
+}
+table.devel-comment tr:hover {
+    background-color: #dedede;
+}
