@@ -27,7 +27,6 @@
 
 %       for my $eval_file ($line->sorted_eval_files->@*) {
                     <tr>
-                    <!-- # spent 748µs executing statements in string eval -->
                         <td><a href="#"><%== $padding %>#</a></td>
                         <td><a href="#">spent</td>
                         <td class="pull-right"><a href="#">
