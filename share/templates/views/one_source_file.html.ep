@@ -1,7 +1,16 @@
 % use App::Castamere::Util qw/format_time/;
+% my $start_at = stash 'start_at';
+% my $end_at = stash 'end_at';
+% my $url_anchor = defined $start_at ? '#' . ($start_at > -1 ? 'line-'.$start_at : 'line-xsubs') : '';
+% my $show_partial = $start_at && $end_at;
 
-    <h3><%= $file->fileinfo->filename %></h3>
-    <table class="table table-squashed table-hover table-condensed">
+    <h3><a href="<%= url_for 'one_file', filename => $file->fileinfo->filename %><%= $url_anchor %>"><%= $file->fileinfo->filename %></a></h3>
+
+% if(!$show_partial) {
+
+    %=  include 'includes/list_of_subroutines', subs => $file->subs(order_by => 'excl_time'), stats => $file->sub_stats, file => $file
+% }
+    <table class="table table-squashed table-hover table-condensed source-list">
         <thead>
             <tr>
                 <th>#</th>
@@ -13,42 +22,54 @@
             </tr>
         </thead>
         <tbody>
-%   my $linenum = 0;$file->stats;
+%   my $linenum = 0;
 %   for my $source_line ($file->fileinfo->srclines_array->@*) {
 %       my $line = $file->lines->[++$linenum];
+%       last if $show_partial && ($linenum > $end_at + 1 || $start_at == -1);
+%       next if $show_partial && $linenum < $start_at - 1;
 
-            <tr>
-                <td class="text-right"><%= $linenum %></td>
-                <td class="text-right"><%= $line->statement_calls ? $line->statement_calls : '' %></td>
-                <td class="text-right"><%= $line->statement_time ? format_time $line->statement_time : '' %></td>
-                <td class="text-right"><%= $line->subcall_count ? $line->subcall_count : '' %></td>
-                <td class="text-right"><%= $line->subcall_time ? format_time $line->subcall_time : '' %></td>
+%#      not sure why this happens sometimes (only seen on the *last* line though)
+%       next if !defined $line;
+            <tr id="line-<%= $linenum %>">
+                <td class="text-right"><a href="#line-<%= $linenum %>"><%= $linenum %></a></td>
+                <td class="text-right <%= include 'includes/severity_class', args => { stats => $file->stats_for('calls'), this => $line->statement_calls } %>">
+                    <%= $line->statement_calls ? $line->statement_calls : '' %>
+                </td>
+                <td class="text-right <%= include 'includes/severity_class', args => { stats => $file->stats_for('time'), this => $line->statement_time } %>">
+                    <%= $line->statement_time ? format_time $line->statement_time : '' %>
+                </td>
+                <td class="text-right <%= include 'includes/severity_class', args => { stats => $file->stats_for('subcall_count'), this => $line->subcall_count || undef } %>">
+                    <%= $line->subcall_count ? $line->subcall_count : '' %>
+                </td>
+                <td class="text-right <%= include 'includes/severity_class', args => { stats => $file->stats_for('subcall_time'), this => $line->subcall_time || undef } %>">
+                    <%= $line->subcall_time ? format_time $line->subcall_time : '' %>
+                </td>
                 <td>
-                    % $source_line =~ m{^(?<spaces> +)};
+                    % $source_line =~ m{^(?<spaces> +)?(?<tabs>\t+)};
                     % my $spaces = $+{'spaces'} ? '&nbsp;' x length $+{'spaces'} : '';
-                    % $source_line =~ s{^( +)}{$spaces};
+                    %   $spaces .= $+{'tabs'}   ? '&nbsp;' x length $+{'tabs'} x 4 : '';
 
                     %= include 'includes/before_source_line', subdefs => $line->subdefs, padding => $spaces
-                    <code class="source-line"><%== $source_line =~ s{^( +)}{'&nbsp;' x length $1 }gre %></code>
+                    <pre class="source-line"><%== $source_line =~ s{^( +)}{'&nbsp;' x length $1 }gre %></pre>
                     %= include 'includes/after_source_line', line => $line, padding => $spaces
                 </td>
             </tr>
 
 %   }
-%   if($file->xsubs->@*) {
-            <tr>
+%   if($file->xsubs->@* && ($start_at == -1 || !defined $start_at)) {
+            <tr id="line-xsubs">
                 <td colspan="6" style="background-color: #bbb;"></td>
             </tr>
 %       for my $xsub ($file->xsubs->@*) {
-            <tr>
-                <td></td>
+            <tr id="line-<%= lc $xsub->subname =~ s{\W+}{-}rg %>">
+                <td><a href="#line-<%= lc $xsub->subname =~ s{\W+}{-}rg %>">#</a></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td>
                     %= include 'includes/before_source_line', subdefs => [$xsub], padding => ''
-                    <code class="source-line">sub <%= $xsub->subname %>; # <%= $xsub->subinfo->kind %>
+                    <pre class="source-line">sub <%= $xsub->subname %>; # <%= $xsub->subinfo->kind %></pre>
                 </td>
             </tr>
 %       }
