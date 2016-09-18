@@ -1,8 +1,11 @@
-code.source-line {
+pre.source-line {
     background-color: inherit;
     color: #333;
     padding: 0px 4px;
     display: block;
+    border: none;
+    margin: 0px 0px 4px 0px;
+    line-height: 1;
 }
 table.table-squashed > tbody > tr > td {
     line-height: 0.9;
@@ -13,6 +16,81 @@ table.table-squashed > tbody > tr > td:not(:last-of-type),
 table.table-squashed > thead > tr > th:not(:last-of-type) {
     border-right: 1px dotted #ddd;
 }
+
+/* sharper colors for severity indicators */
+table.table-squashed > tbody > tr > td.danger {
+    background-color: #f23b56;
+    color: #efefef;
+    font-weight: bold;
+}
+table.table-squashed > tbody > tr:hover > td.danger {
+    background-color: #e8324b;
+    color: #efefef;
+    font-weight: bold;
+}
+
+table.table-squashed > tbody > tr > td.warning {
+    background-color: #fca35d;
+    color: #c52722;
+    font-weight: bold;
+}
+table.table-squashed > tbody > tr:hover > td.warning {
+    background-color: #f39a52;
+    color: #c52722;
+    font-weight: bold;
+}
+
+table.table-squashed > tbody > tr > td.info {
+    background-color: #effd78;
+}
+table.table-squashed > tbody > tr:hover > td.info {
+    background-color: #e8f671;
+}
+
+table.table-squashed > tbody > tr > td.success {
+    background-color: #3fef90;
+}
+table.table-squashed > tbody > tr:hover > td.success {
+    background-color: #38e887;
+}
+/* ---- */
+table.subroutine-list > tbody > tr > td:not(:last-child) {
+    padding-left: 15px;
+    padding-right: 10px;
+}
+table.subroutine-list > tbody > tr > td:last-child {
+    width: 100%;
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 95%;
+    padding-left: 0px;
+}
+table.subroutine-list > tbody > tr > td:last-child > span {
+    color: #888;
+}
+table.subroutine-list > tbody > tr > td:nth-last-child(2) {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-size: 95%;
+    color: #888;
+    padding-right: 0px;
+    border-right-width: 0px;
+}
+
+table.file-list > tbody > tr > td:not(:last-child) {
+    padding-left: 15px;
+    padding-right: 10px;
+}
+table.file-list > tbody > tr > td:last-child {
+    width: 100%;
+}
+
+table.source-list > tbody > tr > td > a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    color: inherit;
+}
+
+
 code.devel-comment {
     color: #888;
     display: block;
