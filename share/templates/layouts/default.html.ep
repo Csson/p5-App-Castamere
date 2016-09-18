@@ -5,6 +5,9 @@
         <title>Castamere - html viewer for Devel::NYTProf</title>
         %= bootstrap 'allq'
         <link href="/resources/castamere.css" rel="stylesheet" type="text/css" />
+        <link href="/resources/castamere-svg.css" rel="stylesheet" type="text/css" />
+        <link href="/resources/castamere-svg-chain-colors.css" rel="stylesheet" type="text/css" />
+        <script src="/resources/castamere-svg.js"></script>
     </head>
     <body>
         <%= navbar  header => ['Castamere', ['#'], hamburger],
