@@ -61,7 +61,7 @@ sub startup($self) {
     })->name('svg');
     $r->get('/')->to(cb => sub ($c) {
         $c->render(template => 'views/overview', reporter => $self->reporter);
-    });
+    })->name('home');
 }
 
 1;
