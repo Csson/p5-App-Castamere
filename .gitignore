@@ -8,3 +8,4 @@ MYMETA.*
 .coverhistory.json
 nytprof*
 bin/throwaway*
+share/nytprof*
