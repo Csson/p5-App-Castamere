@@ -4,10 +4,10 @@
         <meta charset="utf-8" />
         <title>App::Proffy - html viewer for Devel::NYTProf</title>
         %= bootstrap 'allq'
-        <link href="/resources/castamere.css" rel="stylesheet" type="text/css" />
-        <link href="/resources/castamere-svg.css" rel="stylesheet" type="text/css" />
-        <link href="/resources/castamere-svg-chain-colors.css" rel="stylesheet" type="text/css" />
-        <script src="/resources/castamere-svg.js"></script>
+        <link href="/resources/app-proffy.css" rel="stylesheet" type="text/css" />
+        <link href="/resources/app-proffy-svg.css" rel="stylesheet" type="text/css" />
+        <link href="/resources/app-proffy-svg-chain-colors.css" rel="stylesheet" type="text/css" />
+        <script src="/resources/app-proffy-svg.js"></script>
     </head>
     <body>
         <%= navbar  header => ['App::Proffy', ['home'], hamburger],
