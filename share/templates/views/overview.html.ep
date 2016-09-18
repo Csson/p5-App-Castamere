@@ -1,4 +1,4 @@
-% use App::Castamere::Util qw/format_time/;
+% use App::Proffy::Util qw/format_time/;
 % use List::Util qw/any/;
 
 % my $reporter = $c->app->reporter;

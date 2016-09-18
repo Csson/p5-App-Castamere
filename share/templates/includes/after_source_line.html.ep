@@ -1,4 +1,4 @@
-%   use App::Castamere::Util qw/format_time/;
+%   use App::Proffy::Util qw/format_time/;
 
 %   if(scalar $line->subcalls->@* || $line->evalcall_count) {
 

@@ -1,5 +1,5 @@
 %   use List::Util qw/any/;
-%   use App::Castamere::Util qw/sub_url_info/;
+%   use App::Proffy::Util qw/sub_url_info/;
 
 %   if(any { scalar $_->callers->@* } $subdefs->@*) {
 

@@ -1,4 +1,4 @@
-% use App::Castamere::Util qw/format_time/;
+% use App::Proffy::Util qw/format_time/;
 % my $start_at = stash 'start_at';
 % my $end_at = stash 'end_at';
 % my $url_anchor = defined $start_at ? '#' . ($start_at > -1 ? 'line-'.$start_at : 'line-xsubs') : '';

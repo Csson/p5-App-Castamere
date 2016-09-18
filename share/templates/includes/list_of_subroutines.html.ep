@@ -1,4 +1,4 @@
-%   use App::Castamere::Util qw/format_time sub_url_info/;
+%   use App::Proffy::Util qw/format_time sub_url_info/;
             <table class="table table-squashed table-condensed table-hover subroutine-list">
                 <thead>
                     <tr>

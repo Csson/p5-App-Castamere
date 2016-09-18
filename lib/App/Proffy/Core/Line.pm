@@ -1,7 +1,7 @@
 use 5.20.0;
 use warnings;
 
-package App::Castamere::Prof::Line;
+package App::Proffy::Core::Line;
 
 # ABSTRACT: Short intro
 # AUTHORITY
@@ -19,9 +19,9 @@ use Devel::NYTProf::Util qw/
                 fmt_incl_excl_time
 /;
 use experimental qw/postderef signatures/;
-use App::Castamere::Prof::File;
-use App::Castamere::Prof::SubInfo;
-use App::Castamere::Prof::SubCall;
+use App::Proffy::Core::File;
+use App::Proffy::Core::SubInfo;
+use App::Proffy::Core::SubCall;
 use App::Castamere::Util qw/fix_time/;
 
 has num => (
@@ -32,13 +32,13 @@ has num => (
 
 has subcalls => (
     is => 'ro',
-    isa => ArrayRef[InstanceOf['App::Castamere::Prof::SubCall']],
+    isa => ArrayRef[InstanceOf['App::Proffy::Core::SubCall']],
     alias => 'subcall_info',
     default => sub { [] },
 );
 has subdefs => (
     is => 'ro',
-    isa => ArrayRef[InstanceOf['App::Castamere::Prof::SubInfo']],
+    isa => ArrayRef[InstanceOf['App::Proffy::Core::SubInfo']],
     alias => 'subdef_info',
     default => sub { [] },
 );
@@ -85,12 +85,12 @@ has evalcall_count => (
 );
 has eval_files => (
     is => 'ro',
-    isa => ArrayRef[InstanceOf['App::Castamere::Prof::File']],
+    isa => ArrayRef[InstanceOf['App::Proffy::Core::File']],
     lazy => 1,
     builder => 1,
 );
 sub _build_eval_files($self) {
-    return [map { App::Castamere::Prof::File->new(profile => $self->profile, fileinfo => $_, level => $self->level) } $self->eval_fis->@*];
+    return [map { App::Proffy::Core::File->new(profile => $self->profile, fileinfo => $_, level => $self->level) } $self->eval_fis->@*];
 }
 # This is an array ref of all nested evals
 has eval_fis => (
@@ -158,7 +158,7 @@ around BUILDARGS => sub ($orig, $class, %args) {
         $args{'subcalls'} = [
             gather {
                 for my $to (keys $args{'subcalls'}->%*) {
-                    take(App::Castamere::Prof::SubCall->new(to => $to, subcall => $args{'subcalls'}{ $to }));
+                    take(App::Proffy::Core::SubCall->new(to => $to, subcall => $args{'subcalls'}{ $to }));
                 }
             }
         ];
@@ -167,7 +167,7 @@ around BUILDARGS => sub ($orig, $class, %args) {
         $args{'subdefs'} = [
             gather {
                 for my $subdef ($args{'subdefs'}->@*) {
-                    take(App::Castamere::Prof::SubInfo->new(subinfo => $subdef));
+                    take(App::Proffy::Core::SubInfo->new(subinfo => $subdef));
                 }
             }
         ];
@@ -176,7 +176,7 @@ around BUILDARGS => sub ($orig, $class, %args) {
         my $new_evalcalls = {};
         for my $key ($args{'evalcalls'}->%*) {
             next if !ref $args{'evalcalls'}{ $key };
-            $new_evalcalls->{ $key } = App::Castamere::Prof::File->new(
+            $new_evalcalls->{ $key } = App::Proffy::Core::File->new(
                 profile => $args{'profile'},
                 level => $args{'level'},
                 fileinfo => $args{'evalcalls'}{ $key },

@@ -1,7 +1,7 @@
 use 5.20.0;
 use warnings;
 
-package App::Castamere::Prof::File;
+package App::Proffy::Core::File;
 
 # ABSTRACT: Short intro
 # AUTHORITY
@@ -13,8 +13,8 @@ use List::Util qw/max sum/;
 use PerlX::Maybe;
 use Syntax::Keyword::Gather;
 use Devel::NYTProf::Util qw/calculate_median_absolute_deviation get_abs_paths_alternation_regex/;
-use App::Castamere::Prof::Line;
-use App::Castamere::Prof::SubInfo;
+use App::Proffy::Core::Line;
+use App::Proffy::Core::SubInfo;
 use experimental qw/postderef signatures/;
 
 has fileinfo => (
@@ -77,7 +77,7 @@ sub _build_xsubs($self) {
                 my $subinfo = $subs_defined_in_file->{ $subname };
                 next if $subinfo->kind eq 'perl';
                 next if !$subinfo->calls;
-                take(App::Castamere::Prof::SubInfo->new(subinfo => $subinfo));
+                take(App::Proffy::Core::SubInfo->new(subinfo => $subinfo));
             }
         }
     ];
@@ -111,7 +111,7 @@ has source_max_line => (
 );
 has lines => (
     is => 'ro',
-    isa => ArrayRef[InstanceOf['App::Castamere::Prof::Line']],
+    isa => ArrayRef[InstanceOf['App::Proffy::Core::Line']],
     lazy => 1,
     builder => 1,
 );
@@ -121,7 +121,7 @@ sub _build_lines($self) {
     return [
         gather {
             for my $linenum (0..$max_linenum) {
-                take(App::Castamere::Prof::Line->new(
+                take(App::Proffy::Core::Line->new(
                           level => $self->level,
                           profile => $self->profile,
                     maybe subcalls => $self->subcalls_at_line->{ $linenum },

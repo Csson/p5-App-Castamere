@@ -1,7 +1,7 @@
 use 5.20.0;
 use warnings;
 
-package App::Castamere::Reporter;
+package App::Proffy::Reporter;
 
 # ABSTRACT: Short intro
 # AUTHORITY
@@ -28,7 +28,7 @@ use Devel::NYTProf::Util qw/
         calculate_median_absolute_deviation
         get_abs_paths_alternation_regex
 /;
-use App::Castamere::Prof::File;
+use App::Proffy::Core::File;
 use Graph::Flames;
 use Graph::Flames::CallStack;
 use experimental qw/postderef signatures/;
@@ -84,7 +84,7 @@ has profile => (
 );
 has files => (
     is => 'ro',
-    isa => ArrayRef[InstanceOf['App::Castamere::Prof::File']],
+    isa => ArrayRef[InstanceOf['App::Proffy::Core::File']],
     lazy => 1,
     init_arg => undef,
     builder => 1,
@@ -96,7 +96,7 @@ sub _build_files($self) {
                 my @fileinfos = $self->get_all_fileinfos($level);
 
                 for my $fileinfo (@fileinfos) {
-                    take(App::Castamere::Prof::File->new(profile => $self->profile, fileinfo => $fileinfo, level => $level));
+                    take(App::Proffy::Core::File->new(profile => $self->profile, fileinfo => $fileinfo, level => $level));
                 }
             }
         }

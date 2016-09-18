@@ -1,8 +1,8 @@
 ---
-name: castamere
+name: proffy-cli
 appspec: { "version": 0.0100 }
-class: App::Castamere
-title: App::Castamere
+class: App::Proffy
+title: App::Proffy
 
 subcommands:
   doit:

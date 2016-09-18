@@ -1,7 +1,7 @@
 use 5.20.0;
 use warnings;
 
-package App::Castamere::Prof::SubInfo;
+package App::Proffy::Core::SubInfo;
 
 # ABSTRACT: Short intro
 # AUTHORITY

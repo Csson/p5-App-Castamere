@@ -2,7 +2,7 @@ use 5.20.0;
 use strict;
 use warnings;
 
-package App::Castamere;
+package App::Proffy;
 
 # ABSTRACT: Short intro
 # AUTHORITY
@@ -12,13 +12,10 @@ use base 'App::Spec::Run';
 use Moo;
 use Dir::Self;
 use List::Util qw/any/;
-use App::Castamere::Reporter;
-use App::Castamere::HtmlGenerator;
+use App::Proffy::Reporter;
 
 sub doit {
-    my $reporter = App::Castamere::Reporter->new;
-    my $generator = App::Castamere::HtmlGenerator->new(reporter => $reporter);
-
+    my $reporter = App::Proffy::Reporter->new;
 }
 
 1;
@@ -29,11 +26,11 @@ __END__
 
 =head1 SYNOPSIS
 
-    use App::Castamere;
+    use App::Proffy;
 
 =head1 DESCRIPTION
 
-App::Castamere is ...
+App::Proffy is ...
 
 =head1 SEE ALSO
 

@@ -1,7 +1,7 @@
 use 5.20.0;
 use warnings;
 
-package App::Castamere::Web;
+package App::Proffy::Web;
 
 # ABSTRACT: ...
 our $AUTHORITY = 'cpan:CSSON'; # AUTHORITY
@@ -11,17 +11,17 @@ use Mojo::Base 'Mojolicious';
 use Mojo::Home;
 use File::ShareDir 'dist_dir';
 use Path::Tiny;
-use App::Castamere::Reporter;
+use App::Proffy::Reporter;
 use experimental qw/postderef signatures/;
 
-has reporter => sub { App::Castamere::Reporter->new(infile => Mojo::Home->new->rel_file('share/nytprof.out')) };
+has reporter => sub { App::Proffy::Reporter->new(infile => Mojo::Home->new->rel_file('share/nytprof.out')) };
 
 sub startup($self) {
     $self->plugin('BootstrapHelpers');
     $self->plugin('EPRenderer', template => { prepend => 'use experimental qw/postderef/;' });
 
     my $dirroot = 1 ? path(Mojo::Home->new->rel_dir('share'))
-                    : path(dist_dir('App-Castamere'))
+                    : path(dist_dir('App-Proffy'))
                     ;
     my $template_dir = $dirroot->child('templates');
     push $self->renderer->paths->@* => $template_dir->realpath;
