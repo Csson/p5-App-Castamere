@@ -1,0 +1,36 @@
+g.chain > rect {
+    stroke: 0.5;
+    color: #eee;
+    border-right-color: #000;
+    border-right-width: 1;
+}
+g.chain > text {
+    font-family: 'courier new';
+    font-size: 12px;
+}
+g.chain:hover * {
+    cursor: pointer;
+}
+g.chain:hover rect {
+    stroke: #444;
+    stroke-width: 0.75;
+}
+g.chain:hover:not(.zoomed) {
+    /* opacity: 0.7;*/
+}
+g.chain line.border-right {
+    stroke: #fff;
+    stroke-width: 0.2;
+}
+g.chain.zoom-unwanted {
+    display: none;
+}
+g.chain.zoom-too-thin {
+    display: none;
+}
+#search-results > rect.search-highlighter {
+    fill: #eaeaea;
+}
+#search-results > rect.search-highlighter-unwanted {
+    fill: #fff;
+}

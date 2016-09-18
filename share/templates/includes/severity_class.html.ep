@@ -1,0 +1,7 @@
+<%  
+    if(!defined $args->{'this'} || !$args->{'this'}) {                                 %><%= $args->{'default_class'} || '' %><% }
+    elsif($args->{'this'} <= $args->{'stats'}{'median'} + $args->{'stats'}{'deviation'} * 0.5) { %>success<%        }
+    elsif($args->{'this'} <= $args->{'stats'}{'median'} + $args->{'stats'}{'deviation'}) {       %>info<%           }
+    elsif($args->{'this'} <= $args->{'stats'}{'median'} + $args->{'stats'}{'deviation'} * 2 ) {  %>warning<%        }
+    else {                                                                                       %>danger<%         }
+%>

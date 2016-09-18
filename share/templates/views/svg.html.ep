@@ -1,0 +1,8 @@
+<div id="svg"><%== $reporter->flamegraph->svg->xmlify %></div>
+<div id="hovered-sub" style="min-height: 25px"></div>
+
+%= form_for '', id => 'search-form', class => 'form-inline', begin
+    %= input input => { text_field => ['search', size => 75] }, append => { button => ['reset', ['#'], id => 'search-reset']}
+%  end
+
+<div id="source-list" data-sub-source-url="<%= url_for 'sub' %>"></div>

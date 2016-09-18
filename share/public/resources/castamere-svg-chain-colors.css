@@ -1,0 +1,81 @@
+/* bg black, for the time bar */
+g.chain.color-bar > rect {
+    fill: #333;
+}
+g.chain.color-bar > text {
+    fill: #ddd;
+}
+
+/* bg dark red */
+g.chain.color-0 > rect {
+    fill: #d70019;
+}
+g.chain.color-0 > text {
+    fill: #fbd3d8;
+}
+
+/* bg dark orange */
+g.chain.color-1 > rect {
+    fill: #e18b00;
+}
+g.chain.color-1 > text {
+    fill: #fff0d7;
+}
+
+/* bg dark blue */
+g.chain.color-2 > rect {
+    fill: #064493;
+}
+g.chain.color-2 > text {
+    fill: #bccadb;
+}
+
+/* bg dark green */
+g.chain.color-3 > rect {
+    fill: #27bd00;
+}
+g.chain.color-3 > text {
+    fill: #d1efc9;
+}
+
+/* bg light red */
+g.chain.color-4 > rect {
+    fill: #f6485d;
+}
+g.chain.color-4 > text {
+    fill: #750019;
+}
+
+/* bg light orange */
+g.chain.color-5 > rect {
+    fill: #ffba4b;
+}
+g.chain.color-5 > text {
+    fill: #e14000;
+}
+
+/* bg light blue */
+g.chain.color-6 > rect {
+    fill: #779ac7;
+}
+g.chain.color-6 > text {
+    fill: #064493;
+}
+
+/* bg light green */
+g.chain.color-7 > rect {
+    fill: #95e580;
+}
+g.chain.color-7 > text {
+    fill: #007a00;
+}
+
+
+
+/* bg greenbluish */
+g.chain.color-8 > rect {
+    fill: #00a29c;
+}
+g.chain.color-8 > text {
+    fill: #b7e4e3;
+}

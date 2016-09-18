@@ -1,0 +1,45 @@
+%   use App::Castamere::Util qw/format_time sub_url_info/;
+            <table class="table table-squashed table-condensed table-hover subroutine-list">
+                <thead>
+                    <tr>
+                        <th class="text-center">Calls</th>
+                        <th class="text-center">Origins</th>
+                        <th class="text-center">Files</th>
+                        <th class="text-center" colspan="2">Exclusive<br />time</th>
+                        <th class="text-center" colspan="2">Inclusive<br />time</th>
+                        <th class="text-center" colspan="2">Subroutine</th>
+                    </tr>
+                </thead>
+                <tbody>
+%   for my $sub ($subs->@*) {
+                    <tr>
+                        <td class="text-right <%= include 'includes/severity_class', args => { stats => $stats->{'calls'}, this => 0+$sub->calls, default_class => 'success' } %>">
+                            <%= $sub->calls %>
+                        </td>
+                        <td class="text-right <%= include 'includes/severity_class', args => { stats => $stats->{'caller_count'}, this => 0+$sub->caller_count, default_class => 'success' } %>">
+                            <%= $sub->caller_count %>
+                        </td>
+                        <td class="text-right <%= include 'includes/severity_class', args => { stats => $stats->{'caller_fids'}, this => 0+$sub->caller_fids, default_class => 'success' } %>">
+                            <%= $sub->caller_fids %>
+                        </td>
+
+                        <td class="text-right <%= include 'includes/severity_class', args => { stats => $stats->{'excl_time'}, this => 0+$sub->excl_time, default_class => 'success' } %>">
+                            <%= format_time $sub->excl_time %>
+                        </td>
+                        <td class="small text-right <%= include 'includes/severity_class', args => { stats => $stats->{'excl_time'}, this => 0+$sub->excl_time, default_class => 'success' } %>">
+                            <%= sprintf '%.1f%%', $sub->excl_time / $c->app->reporter->profile->{'attribute'}{'profiler_active'} * 100 %>
+                        </td>
+
+                        <td class="text-right <%= include 'includes/severity_class', args => { stats => $stats->{'incl_time'}, this => 0+$sub->incl_time, default_class => 'success' } %>">
+                            <%= format_time $sub->incl_time %>
+                        </td>
+                        <td class="small text-right <%= include 'includes/severity_class', args => { stats => $stats->{'incl_time'}, this => 0+$sub->incl_time, default_class => 'success' } %>">
+                            <%= sprintf '%.1f%%', $sub->incl_time / $c->app->reporter->profile->{'attribute'}{'profiler_active'} * 100 %>
+                        </td>
+
+%       my $url = sub_url_info($c->app->reporter->profile, $sub);
+                        <td class="text-right"><%= $url->{'package'} %></td>
+                        <td><a href="<%= url_for 'one_file', filename => $url->{'filename'} %>#<%= $url->{'anchor'} %>"><%= $url->{'subname'} %></a><% if($url->{'extras'}->@*) { %> <span><%= join ' ', $url->{'extras'}->@* %></span><% } %></td>
+%   }
+                </tbody>
+            </table>
