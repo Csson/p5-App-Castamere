@@ -1,5 +1,6 @@
 var pressedKeys = {
     shift: false,
+    ctrl: false,
 };
 
 $(document).ready(function() {
@@ -37,6 +38,22 @@ $(document).ready(function() {
                 }).fail(function() {
                     $('#source-list').html('No source to show.');
                 });
+            }
+            if(pressedKeys.shift && !pressedKeys.ctrl) {
+                var cleanedSubName = subName.replace(/\[/g, '\\[');
+                cleanedSubName = cleanedSubName.replace(/\]/g, '\\]');
+                cleanedSubName = cleanedSubName.replace(/\//g, '\\/');
+                $('#search').val('^' + cleanedSubName + '$');
+                $('#search-form').submit();
+                document.getSelection().removeAllRanges();
+                return false;
+            }
+            else if(pressedKeys.ctrl && !pressedKeys.shift) {
+                var cleanedSubName = subName.replace(/::[^:]+$/, '::');
+                $('#search').val('^' + cleanedSubName);
+                $('#search-form').submit();
+                document.getSelection().removeAllRanges();
+                return false;
             }
 
             $('.zoomed').removeClass('zoomed');
@@ -135,7 +152,7 @@ $(document).ready(function() {
 
                 if(searchMatches) {
                     $group.addClass('search-result');
-console.log($group, $group.find('rect:first').attr('x'), $group.find('rect:first').attr('width'), $group.attr('class'));
+
                     var matchX = parseFloat($rect.attr('x'));
                     var matchWidth = parseFloat($rect.attr('width'));
 
@@ -225,10 +242,16 @@ console.log($group, $group.find('rect:first').attr('x'), $group.find('rect:first
             if(e.shiftKey) {
                 pressedKeys['shift'] = true;
             }
+            if(e.ctrlKey) {
+                pressedKeys['ctrl'] = true;
+            }
         })
         .keyup(function(e) {
             if(!e.shiftKey) {
                 pressedKeys['shift'] = false;
+            }
+            if(!e.ctrlKey) {
+                pressedKeys['ctrl'] = false;
             }
         });
 
@@ -299,7 +322,7 @@ function changeChainAppearance($group, newX, newWidth, fontWidth) {
     $text.attr('x', newX + 2.5);
     $text.text(longestPossibleText($group.data('name'), $rect.attr('width'), fontWidth));
 
-    if($rect.attr('width') < 0.1) { $group.addClass('zoom-too-thin'); }
+    if($rect.attr('width') < 0.3) { $group.addClass('zoom-too-thin'); }
 
     $group.addClass('zoom-descendant');
 }
