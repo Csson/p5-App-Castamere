@@ -131,14 +131,24 @@ has statement_calls => (
     is => 'ro',
     isa => Int,
     lazy => 1,
-    predicate => 1,
+    default => 0,
 );
 has statement_time => (
     is => 'ro',
     isa => Num,
     lazy => 1,
-    predicate => 1,
+    default => 0,
 );
+has statement_average_time_per_call => (
+    is => 'ro',
+    isa => Num,
+    lazy => 1,
+    default => sub($self) {
+        return 0 if !$self->statement_calls || !$self->statement_time;
+        return $self->statement_time / $self->statement_calls;
+    },
+);
+
 
 
 
@@ -174,8 +184,8 @@ around BUILDARGS => sub ($orig, $class, %args) {
         }
         $args{'evalcalls'} = $new_evalcalls;
     }
-    if($args{'statements'}) {
-        $args{'statement_time'} = $args{'statements'}->[0];
+    if($args{'statements'} && $args{'statements'}->@* == 2) {
+        $args{'statement_time'} = $args{'statements'}->[0] || 0;
         $args{'statement_calls'} = $args{'statements'}->[1] || 1;
     }
     return $class->$orig(%args);
