@@ -16,7 +16,7 @@ use Devel::NYTProf::Util qw/
                 fmt_time
                 fmt_incl_excl_time
 /;
-use App::Castamere::Util qw/fix_time/;
+use App::Proffy::Util qw/fix_time/;
 use Data::Printer;
 use experimental qw/postderef signatures/;
 

@@ -22,7 +22,7 @@ use experimental qw/postderef signatures/;
 use App::Proffy::Core::File;
 use App::Proffy::Core::SubInfo;
 use App::Proffy::Core::SubCall;
-use App::Castamere::Util qw/fix_time/;
+use App::Proffy::Util qw/fix_time/;
 
 has num => (
     is => 'ro',
