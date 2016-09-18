@@ -1,27 +1,27 @@
 # NAME
 
-App::Castamere - Short intro
+App::Proffy - Short intro
 
 <div>
     <p>
-    <img src="https://img.shields.io/badge/perl-unknown-blue.svg" alt="Requires Perl unknown" />
-    <a href="https://travis-ci.org//"><img src="https://api.travis-ci.org//.svg?branch=master" alt="Travis status" /></a>
-    <a href="http://cpants.cpanauthors.org/release/CSSON/App-Castamere-0.0100"><img src="http://badgedepot.code301.com/badge/kwalitee/CSSON/App-Castamere/0.0100" alt="Distribution kwalitee" /></a>
-    <a href="http://matrix.cpantesters.org/?dist=App-Castamere%200.0100"><img src="http://badgedepot.code301.com/badge/cpantesters/App-Castamere/0.0100" alt="CPAN Testers result" /></a>
+    <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
+    <a href="https://travis-ci.org/Csson/p5-App-Castamere"><img src="https://api.travis-ci.org/Csson/p5-App-Castamere.svg?branch=master" alt="Travis status" /></a>
+    <a href="http://cpants.cpanauthors.org/release/CSSON/App-Proffy-0.0100"><img src="http://badgedepot.code301.com/badge/kwalitee/CSSON/App-Proffy/0.0100" alt="Distribution kwalitee" /></a>
+    <a href="http://matrix.cpantesters.org/?dist=App-Proffy%200.0100"><img src="http://badgedepot.code301.com/badge/cpantesters/App-Proffy/0.0100" alt="CPAN Testers result" /></a>
     </p>
 </div>
 
 # VERSION
 
-Version 0.0100, released 2016-09-13.
+Version 0.0100, released 2016-09-18.
 
 # SYNOPSIS
 
-    use App::Castamere;
+    use App::Proffy;
 
 # DESCRIPTION
 
-App::Castamere is ...
+App::Proffy is ...
 
 # SEE ALSO
 
@@ -31,7 +31,7 @@ App::Castamere is ...
 
 # HOMEPAGE
 
-[https://metacpan.org/release/App-Castamere](https://metacpan.org/release/App-Castamere)
+[https://metacpan.org/release/App-Proffy](https://metacpan.org/release/App-Proffy)
 
 # AUTHOR
 

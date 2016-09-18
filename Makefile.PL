@@ -6,19 +6,27 @@ use 5.010000;
 
 use ExtUtils::MakeMaker;
 
+use File::ShareDir::Install;
+$File::ShareDir::Install::INCLUDE_DOTFILES = 1;
+$File::ShareDir::Install::INCLUDE_DOTDIRS = 1;
+install_share dist => "share";
+
+
 my %WriteMakefileArgs = (
   "ABSTRACT" => "Short intro",
   "AUTHOR" => "Erik Carlsson <info\@code301.com>",
   "CONFIGURE_REQUIRES" => {
-    "ExtUtils::MakeMaker" => 0
+    "ExtUtils::MakeMaker" => 0,
+    "File::ShareDir::Install" => "0.06"
   },
-  "DISTNAME" => "App-Castamere",
+  "DISTNAME" => "App-Proffy",
   "EXE_FILES" => [
-    "bin/castamere"
+    "bin/proffy-cli",
+    "bin/proffy-server"
   ],
   "LICENSE" => "perl",
   "MIN_PERL_VERSION" => "5.010000",
-  "NAME" => "App::Castamere",
+  "NAME" => "App::Proffy",
   "PREREQ_PM" => {},
   "TEST_REQUIRES" => {
     "ExtUtils::MakeMaker" => 0,
@@ -53,3 +61,9 @@ delete $WriteMakefileArgs{CONFIGURE_REQUIRES}
   unless eval { ExtUtils::MakeMaker->VERSION(6.52) };
 
 WriteMakefile(%WriteMakefileArgs);
+
+{
+package
+MY;
+use File::ShareDir::Install qw(postamble);
+}

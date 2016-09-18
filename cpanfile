@@ -1,4 +1,4 @@
-# This file was auto-generated from iller.yaml by Dist::Iller on 2016-09-13 23:40:22 UTC.
+# This file was auto-generated from iller.yaml by Dist::Iller on 2016-09-18 16:24:38 UTC.
 
 on runtime => sub {
     requires 'perl' => '5.010000';
@@ -15,6 +15,7 @@ on test => sub {
 };
 on configure => sub {
     requires 'ExtUtils::MakeMaker' => '0';
+    requires 'File::ShareDir::Install' => '0.06';
 };
 on develop => sub {
     requires 'Badge::Depot' => '0.0103';
