@@ -1,4 +1,6 @@
 %   use List::Util qw/any/;
+%   use App::Castamere::Util qw/sub_url_info/;
+
 %   if(any { scalar $_->callers->@* } $subdefs->@*) {
 
             <table class="devel-comment">
@@ -8,7 +10,7 @@
 %           next if !scalar $callers->@*;
 
                 <tr>
-                    <td><%== $padding %>#</a></td>
+                    <td><%== $padding %>#</td>
                     <td colspan="2">spent <%== $subinfo->formatted_time_incl_excl %></td>
                     <td colspan="4">within <%= $subinfo->subname %>
                                     which was called
@@ -21,9 +23,11 @@
                 </tr>
 
 %           for my $caller ($callers->@*) {
+%               my $url_info = sub_url_info($c->app->reporter->profile, $caller->{'calling_subs'}[0]);
+%               my $url = url_for('one_file', filename => $url_info->{'filename'}) ."#$url_info->{'anchor'}";
                 <tr>
-                    <td><a href="#"><%== $padding %>#</A></td>
-                    <td class="pull-right"><a href="#">
+                    <td><a href="<%= $url %>"><%== $padding %>#</A></td>
+                    <td class="text-right"><a href="<%= $url %>">
 %               if($caller->{'total_calls'} == 1) {
                        once
 %              }
@@ -31,16 +35,22 @@
                         <%= $caller->{'total_calls'} %> times
 %               }
                     </a></td>
-                    <td><a href="#">
+                    <td><a href="<%= $url %>">
 %               if($caller->{'total_calls'} >= 1) {
                         (<%= $subinfo->format_time($caller->{'excl_time'}) %> + <%= $subinfo->format_time($caller->{'incl_time'} - $caller->{'excl_time'}) %>)
 %               }
                     </a></td>
-                    <td><a href="#">by <%= join '<br />' => $caller->{'calling_subs'}->@* %></a></td>
-                    <td><a href="#">at line <%= $caller->{'line'} %></a></td>
-                    <td><a href="#">of <%= $c->app->reporter->filename_of_fid($caller->{'fid'}) %></a></td>
-                    <td><a href="#">
-%              if($caller->{'total_calls'} > 1) {
+                    <td><a href="<%= $url %>">by <%= join '<br />' => $caller->{'calling_subs'}->@* %></a></td>
+                    <td><a href="<%= $url %>">at line <%= $url_info->{'first_line'} %></a></td>
+%               if($url_info->{'clean_filename'} ne $file->clean_filename) {
+                    <td><a href="<%= $url %>">of <%= $url_info->{'clean_filename'} %></a></td>
+%               }
+%               else {
+                    <td></td>
+%               }
+
+                    <td><a href="<%= $url %>">
+%               if($caller->{'total_calls'} > 1) {
                     (avg <%= $subinfo->format_time($caller->{'incl_time'} / $caller->{'total_calls'}) %>)
 %               }
                     </a></td>
