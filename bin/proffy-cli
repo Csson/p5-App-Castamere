@@ -3,7 +3,7 @@ use 5.20.0;
 
 # ABSTRACT: Short intro
 # AUTHORITY
-# PODNAME: castamere
+# PODNAME: proffy-cli
 our $VERSION = '0.0100';
 
 

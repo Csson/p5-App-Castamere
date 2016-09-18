@@ -1,9 +1,14 @@
 #!/usr/bin/env perl
 
+# ABSTRACT: Short intro
+# AUTHORITY
+# PODNAME: proffy-server
+our $VERSION = '0.0100';
+
 use strict;
 use warnings;
 use lib 'lib';
 
 # Start command line interface for application
 require Mojolicious::Commands;
-Mojolicious::Commands->start_app('App::Castamere::Web');
+Mojolicious::Commands->start_app('App::Proffy::Web');
