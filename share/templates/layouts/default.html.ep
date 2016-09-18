@@ -10,8 +10,7 @@
         <script src="/resources/castamere-svg.js"></script>
     </head>
     <body>
-        <%= navbar  header => ['Castamere', ['#'], hamburger],
-                    container => 'normal',
+        <%= navbar  header => ['Castamere', ['home'], hamburger],
                     nav => [
                     ],
         %>

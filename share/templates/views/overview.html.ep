@@ -3,7 +3,7 @@
 
 % my $reporter = $c->app->reporter;
 % my $eval_fileinfos = $reporter->profile->eval_fileinfos;
-                Profile of <%= $reporter->application %>
+                <h4>Profile of <b><%= $reporter->application %></b>
                 for <%= format_time $reporter->profiler_active %> of (<%= format_time $reporter->profiler_duration %>)
                 executing 
 %   if($reporter->profile->{'option'}{'stmts'}) {
@@ -14,6 +14,8 @@
 %   if($eval_fileinfos) {
                 and <%= $eval_fileinfos %> string evals
 %   }
+            </h4>
+            <p>See a <a href="<%= url_for 'svg' %>">flamegraph</a> over all callstacks.</p>
 
 %=          include 'includes/list_of_subroutines', subs => $c->app->reporter->subs(order_by => 'excl_time', limit => 30), file => undef, stats => $c->app->reporter->sub_stats
 
