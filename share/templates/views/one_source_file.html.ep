@@ -1,4 +1,5 @@
 % use App::Proffy::Util qw/format_time/;
+
 % my $start_at = stash 'start_at';
 % my $end_at = stash 'end_at';
 % my $url_anchor = defined $start_at ? '#' . ($start_at > -1 ? 'line-'.$start_at : 'line-xsubs') : '';
@@ -56,7 +57,7 @@
             </tr>
 
 %   }
-%   if($file->xsubs->@* && ($start_at == -1 || !defined $start_at)) {
+%   if($file->xsubs->@* && (!defined $start_at || $start_at == -1)) {
             <tr id="line-xsubs">
                 <td colspan="6" style="background-color: #bbb;"></td>
             </tr>
