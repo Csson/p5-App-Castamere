@@ -86,9 +86,7 @@ $(document).ready(function() {
             var wantedClass = $group.attr('id');
             $svg.find('g#chains > g.' + wantedClass).each(function() {
                 var $foundGroup = $(this);
-
                 var $foundRect = $foundGroup.find('rect:first');
-                var $foundBorderRight = $foundGroup.find('line:first-of-type');
 
                 var foundX = parseFloat($foundRect.data('orig-x') || $foundRect.attr('x'));
                 var foundWidth = parseFloat($foundRect.data('orig-width') || $foundRect.attr('width'));
@@ -351,7 +349,6 @@ function floatRound(number, precision) {
 function changeChainAppearance($group, newX, newWidth, fontWidth) {
     var $rect = $group.find('rect:first');
     var $text = $group.find('text:first');
-    var $borderRight = $group.find('line:first-of-type');
 
     if(!$rect.data('orig-x')) {
         $rect.attr('data-orig-x', $rect.attr('x'));
@@ -360,8 +357,6 @@ function changeChainAppearance($group, newX, newWidth, fontWidth) {
 
     $rect.attr('x', newX)
          .attr('width', newWidth);
-    $borderRight.attr('x1', newX + newWidth)
-                .attr('x2', newX + newWidth);
 
     var title = longestPossibleText(getGroupTitle($group, 0), $rect.attr('width'), fontWidth);
 
