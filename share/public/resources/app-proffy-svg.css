@@ -1,31 +1,31 @@
-g.chain > rect {
+g#chains > g > rect {
     stroke: 0.5;
     color: #eee;
     border-right-color: #000;
     border-right-width: 1;
 }
-g.chain > text {
+g#chains > g > text {
     font-family: 'courier new';
     font-size: 12px;
 }
-g.chain:hover * {
+g#chains > g:hover * {
     cursor: pointer;
 }
-g.chain:hover rect {
+g#chains > g:hover rect {
     stroke: #444;
     stroke-width: 0.75;
 }
-g.chain:hover:not(.zoomed) {
+g#chains > g:hover:not(.zoomed) {
     /* opacity: 0.7;*/
 }
-g.chain line.border-right {
+g#chains > g line:first-of-type {
     stroke: #fff;
     stroke-width: 0.2;
 }
-g.chain.zoom-unwanted {
+g#chains > g.zoom-unwanted {
     display: none;
 }
-g.chain.zoom-too-thin {
+g#chains > g.zoom-too-thin {
     display: none;
 }
 #search-results > rect.search-highlighter {
