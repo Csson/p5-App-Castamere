@@ -56,7 +56,9 @@ $(document).ready(function() {
                 return false;
             }
             else if(pressedKeys.ctrl && !pressedKeys.shift) {
-                var cleanedSubName = subName.replace(/::[^:]+$/, '::');
+                // Removes everything after the last ::
+                var cleanedSubName = subName.substring(0, subName.length - subName.split('').reverse().join('').indexOf('::'));
+
                 $('#search').val('^' + cleanedSubName);
                 $('#search-form').submit();
                 document.getSelection().removeAllRanges();
@@ -299,7 +301,7 @@ function getGroupTitle($group, createElement) {
     if((allData.rfn || allData.fn) && allData.num) {
         fullName = fullName + '__ANON__[';
         fullName = fullName + (allData.rfn ? allData.rfn : allData.fn  ? $('#' + allData.fn).data('rfn') : '');
-        fullName = fullName + allData.num + ']';
+        fullName = fullName + ':' + allData.num + ']';
     }
 
     $group.data('name', fullName);
